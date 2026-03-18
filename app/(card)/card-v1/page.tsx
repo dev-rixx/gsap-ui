@@ -1,3 +1,5 @@
+// Framework - Nextjs , Tailwindcss , GSAP, TypeScript
+
 import CardV1, { CardV1Slide } from "@/components/CardV1";
 
 const slides: CardV1Slide[] = [
