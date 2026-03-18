@@ -10,7 +10,6 @@ function getCardV1Props(depth: number) {
   if (depth === 0) {
     return { rotate: 0, x: 0, y: 0, opacity: 1, scale: 1 };
   }
-  // All cards fan to the left
   const rotate = -(4 + depth * 5);
   const x = -(10 + depth * 14);
   const y = -(4 + depth * 4);
@@ -32,7 +31,6 @@ export default function CardV1({ slides }: CardV1Props) {
     orderRef.current = slides.map((_, i) => i);
   }, [slides]);
 
-  // ── Apply fan positions based on current order ──
   function applyFanLayout(animated = true, skipIdx = -1) {
     const order = orderRef.current;
     order.forEach((cardIdx, depth) => {
@@ -64,7 +62,6 @@ export default function CardV1({ slides }: CardV1Props) {
     });
   }
 
-  // ── Cycle: front card smoothly travels to the back (left) ──
   function cycleCards() {
     if (isAnimating.current) return;
     isAnimating.current = true;
@@ -78,17 +75,13 @@ export default function CardV1({ slides }: CardV1Props) {
       return;
     }
 
-    // Where the back position will be after reorder
     const backDepth = count - 1;
     const backFan = getCardV1Props(backDepth);
 
-    // Update order: front goes to back
     orderRef.current = [...order.slice(1), frontCardIdx];
 
-    // Drop the z-index of the departing card below others immediately
     frontEl.style.zIndex = String(0);
 
-    // Smoothly animate front card traveling to the back-left position
     gsap.to(frontEl, {
       rotation: backFan.rotate,
       x: backFan.x,
@@ -98,26 +91,21 @@ export default function CardV1({ slides }: CardV1Props) {
       duration: 0.75,
       ease: "power2.inOut",
       onComplete: () => {
-        // Set final z-index
         frontEl.style.zIndex = String(1);
         isAnimating.current = false;
       },
     });
 
-    // Shift all other cards to their new fan positions (skip the departing one)
     applyFanLayout(true, frontCardIdx);
   }
 
-  // ── Entrance animation + start auto-cycle ──────
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Initial: all invisible stacked
       cardsRef.current.forEach((el) => {
         if (!el) return;
         gsap.set(el, { rotation: 0, x: 0, y: 60, opacity: 0, scale: 0.9 });
       });
 
-      // Pop out back→front
       const tl = gsap.timeline({ delay: 0.3 });
 
       for (let depth = count - 1; depth >= 0; depth--) {
@@ -142,7 +130,6 @@ export default function CardV1({ slides }: CardV1Props) {
       }
     }, sceneRef);
 
-    // Auto-cycle every 2s
     const startDelay = setTimeout(() => {
       intervalRef.current = setInterval(() => {
         cycleCards();
@@ -159,7 +146,6 @@ export default function CardV1({ slides }: CardV1Props) {
 
   return (
     <div ref={sceneRef} className={styles.scene}>
-      {/* Render cards back→front so front card DOM is on top */}
       {[...slides].reverse().map((slide, reversedIdx) => {
         const originalIdx = count - 1 - reversedIdx;
 
@@ -173,7 +159,6 @@ export default function CardV1({ slides }: CardV1Props) {
             style={{ zIndex: count - originalIdx }}
           >
             <div className={styles.cardInner}>
-              {/* Header */}
               <div className={styles.header}>
                 <div className={styles.iconLeft}>
                   <svg
@@ -206,7 +191,6 @@ export default function CardV1({ slides }: CardV1Props) {
                 </div>
               </div>
 
-              {/* Title */}
               <h2 className={styles.title}>
                 {slide.title.split("\n").map((line, j) => (
                   <span key={j}>
@@ -216,7 +200,6 @@ export default function CardV1({ slides }: CardV1Props) {
                 ))}
               </h2>
 
-              {/* Image */}
               <div className={styles.imageWrap}>
                 <Image
                   src={slide.image}
@@ -229,14 +212,12 @@ export default function CardV1({ slides }: CardV1Props) {
                 <span className={styles.tag}>{slide.tag}</span>
               </div>
 
-              {/* Description */}
               <p className={styles.description}>{slide.description}</p>
             </div>
           </div>
         );
       })}
 
-      {/* Reflection shadow */}
       <div className={styles.reflection} />
     </div>
   );

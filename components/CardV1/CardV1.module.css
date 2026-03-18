@@ -5,8 +5,6 @@
   perspective: 1000px;
 }
 
-/* ── Card ──────────────────────────── */
-
 .card {
   position: absolute;
   inset: 0;
@@ -27,8 +25,6 @@
   height: 100%;
   padding: 24px 24px 28px;
 }
-
-/* ── Header row ────────────────────── */
 
 .header {
   display: flex;
@@ -62,8 +58,6 @@
   border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* ── Title ─────────────────────────── */
-
 .title {
   font-size: 1.75rem;
   font-weight: 800;
@@ -74,8 +68,6 @@
   color: #fff;
   margin: 0 0 20px;
 }
-
-/* ── Image container ───────────────── */
 
 .imageWrap {
   position: relative;
@@ -92,8 +84,6 @@
   object-fit: cover;
   display: block;
 }
-
-/* ── Tag badge on image ────────────── */
 
 .tag {
   position: absolute;
@@ -112,8 +102,6 @@
   letter-spacing: 0.02em;
 }
 
-/* ── Description ───────────────────── */
-
 .description {
   margin-top: 18px;
   font-size: 0.8125rem;
@@ -123,8 +111,6 @@
   color: rgba(255, 255, 255, 0.5);
   flex: 1;
 }
-
-/* ── Reflection ────────────────────── */
 
 .reflection {
   position: absolute;
