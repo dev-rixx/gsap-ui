@@ -1,0 +1,293 @@
+/* ═══════════════════════════════════════
+   ProductCard — Fan Spread Carousel
+   ═══════════════════════════════════════ */
+
+.page {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Background ──────────────────── */
+
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.bgImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(12px) saturate(1.2) brightness(0.85);
+  transform: scale(1.08);
+}
+
+.bgOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* ── Brand ───────────────────────── */
+
+.brand {
+  position: absolute;
+  top: 28px;
+  left: 36px;
+  z-index: 20;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ── Carousel area ───────────────── */
+
+.carouselWrap {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.carousel {
+  position: relative;
+  width: 700px;
+  height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Individual card ─────────────── */
+
+.card {
+  position: absolute;
+  width: 240px;
+  height: 340px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  will-change: transform, opacity;
+  transition: box-shadow 0.4s ease;
+}
+
+.cardActive {
+  composes: card;
+  width: 270px;
+  height: 380px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+  cursor: default;
+}
+
+/* ── Card image ──────────────────── */
+
+.imageArea {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.productImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.imageOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent);
+  pointer-events: none;
+}
+
+.productName {
+  position: absolute;
+  bottom: 16px;
+  left: 18px;
+  z-index: 2;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.cardActive .productName {
+  font-size: 1.35rem;
+  color: #fff;
+}
+
+/* ── Active info below center card ── */
+
+.activeInfo {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.activeTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin: 0 0 3px;
+  color: #fff;
+}
+
+.activeSubtitle {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+/* ── Price strip ─────────────────── */
+
+.priceStrip {
+  width: 270px;
+  margin-top: 14px;
+  padding: 14px 22px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.price {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.toggle {
+  position: relative;
+  width: 46px;
+  height: 26px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.18);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.3s ease;
+}
+
+.toggleActive {
+  composes: toggle;
+  background: #fff;
+}
+
+.toggleKnob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+    background 0.3s ease;
+}
+
+.toggleActive .toggleKnob {
+  transform: translateX(20px);
+  background: #1a1a2e;
+}
+
+/* ── Arrow buttons ───────────────── */
+
+.arrows {
+  position: absolute;
+  z-index: 15;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  padding: 0 24px;
+  pointer-events: none;
+}
+
+.arrowBtn {
+  pointer-events: auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+
+.arrowBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #fff;
+  transform: scale(1.08);
+}
+
+.arrowBtn:active {
+  transform: scale(0.95);
+}
+
+/* ── Dots ─────────────────────────── */
+
+.dots {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.dotActive {
+  composes: dot;
+  width: 22px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.85);
+}
